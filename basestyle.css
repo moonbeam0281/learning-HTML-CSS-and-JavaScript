@@ -69,6 +69,17 @@ h2{
     white-space: nowrap; 
 }
 
+#navigator{
+    align-items: center;
+    text-align: center;
+}
+
+#nextpagetext{
+    resize:none;
+    width: 80%;
+    height: 30px;
+}
+
 #centparent{
     display: flex;
     justify-content: center;
