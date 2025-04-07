@@ -1,0 +1,73 @@
+body{
+    background-image: url("divbg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+}
+
+#baseBox{
+    width: 75vw;
+    height: auto;
+    border-radius: 12px;
+    display: grid;
+    align-items: center;
+    padding: 15px;
+    border: 12px;
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.66);
+}
+
+#maindiv{
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+}
+
+.boxclass{
+    border: 2px solid purple;
+    box-shadow: 5px 7px 25px rgba(0,255,255,0.3);
+    border-radius: 15px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 15px;
+}
+
+.subname{
+    color: aqua;
+    text-align: center;
+    font-size: 40px;
+}
+
+h1, h2{
+    text-shadow: -1px -1px 0 black,  
+               1px -1px 0 black,  
+               -1px 1px 0 black,  
+               1px 1px 0 black; 
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+h2{
+    color:rgb(100,125,255);
+    text-align: center;
+}
+
+p{
+    font-size: 20px;
+    color:white;
+    text-shadow: -1px -1px 0 black,  
+               1px -1px 0 black,  
+               -1px 1px 0 black,  
+               1px 1px 0 black; 
+    
+}
