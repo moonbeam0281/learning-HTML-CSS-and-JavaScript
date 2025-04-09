@@ -1,0 +1,9 @@
+.glave{
+    display:flex;
+}
+
+.box{
+    border: 7px solid black;
+    max-width: 30%;
+    
+}
