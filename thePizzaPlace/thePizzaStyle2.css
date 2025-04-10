@@ -1,0 +1,58 @@
+.main{
+    position: absolute;
+    display:flex;
+    flex-direction: column;
+    top: 12%;
+    left: 22%;
+    height: 85vh;
+    width: 75vw;
+    border: 3px solid black;
+    z-index: 3;
+    overflow: visible;
+    background-color: rgba(0,50,50,0.6);
+    border-radius: 15px;
+    border-color: rgb(20, 68, 20);
+    box-shadow: 12px 12px 65px;
+    margin-right: 15px;
+}
+
+.navigator{
+    position: absolute;
+    display: flex;
+    background-color: rgba(0,50,50,0.6);
+    border-radius: 15px;
+    border-color: rgb(20, 68, 20);
+    top: 12%;
+    margin-left: 12px;
+    width: 20vw;
+    height: 85vh;
+    border-radius: 15px;
+}
+
+.nav_list{
+    list-style-type: none;  
+}
+
+.nav_ele{
+    text-align: center;
+    margin-top: 5px;
+    border-radius: 20px;
+    border: 4px solid black;
+    background-color: white;
+    width: 120px;
+    padding: 5px;
+    text-decoration: none;
+}
+
+.pizzaBox{
+    width: 150px;
+    height: 150px;
+    border-radius: 25px;
+}
+
+.pizzaDesc{
+    font-size: 23px;
+    color: rgb(0, 255, 120);
+    border: 2px dashed black;
+    border-radius: 12px;
+}

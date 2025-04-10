@@ -1,0 +1,38 @@
+.boxDiv{
+    top: 30px;
+    width: 300px;
+    height: 300px;
+    border: 3px solid black;
+    margin: 12px;
+    box-shadow: 5px 5px 40px 12px;
+    border-radius: 15px;
+}
+
+#f1{
+    background-color: red;
+    z-index: 1;
+}
+
+#f2{
+    background-color: green;
+    margin-left: -120px;
+    margin-top:60px;
+    z-index: 2;
+}
+
+#f3{
+    background-color: blue;
+    margin-top: 160px;
+    margin-left: -460px;
+    z-index: 3;
+}
+
+#f4{
+    background-color: yellow;
+    margin-top: 40px;
+    z-index: 4;
+}
+
+body{
+    display:flex;
+}
