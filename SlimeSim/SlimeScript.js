@@ -5,61 +5,155 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 class Agent {
-    constructor(x, y, angle, speed, color) {
+    constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.angle = angle;
-        this.speed = speed;
-        this.color = color;
+        this.angle = Math.random() * Math.PI * 2;
+        this.speed = Math.random() * 1 + 1.5;
+        this.radius = 3;
+        this.hue = Math.random() * 50;
+        this.color = `hsl(${this.hue}, 100%, 60%)`;
+
+        this.vx = Math.cos(this.angle) * this.speed;
+        this.vy = Math.sin(this.angle) * this.speed;
     }
 
-    update() {
-        this.x += Math.cos(this.angle) * this.speed;
-        this.y += Math.sin(this.angle) * this.speed;
+    update(agents, mouse) {
+        // Flocking behaviors
+        let align = { x: 0, y: 0 }, cohesion = { x: 0, y: 0 }, separation = { x: 0, y: 0 };
+        let total = 0;
+        const perception = 50;
 
-        // If outside canvas, redirect with new angle
+        for (let other of agents) {
+            const dx = other.x - this.x;
+            const dy = other.y - this.y;
+            const dist = Math.hypot(dx, dy);
+
+            if (other !== this && dist < perception) {
+                // Alignment
+                align.x += other.vx;
+                align.y += other.vy;
+
+                // Cohesion
+                cohesion.x += other.x;
+                cohesion.y += other.y;
+
+                // Separation
+                separation.x += (this.x - other.x) / dist;
+                separation.y += (this.y - other.y) / dist;
+
+                total++;
+            }
+        }
+
+        if (total > 0) {
+            // Alignment
+            align.x /= total;
+            align.y /= total;
+            const alignMag = Math.hypot(align.x, align.y);
+            if (alignMag > 0) {
+                align.x = (align.x / alignMag) * this.speed;
+                align.y = (align.y / alignMag) * this.speed;
+            }
+
+            // Cohesion
+            cohesion.x = ((cohesion.x / total) - this.x) * 0.01;
+            cohesion.y = ((cohesion.y / total) - this.y) * 0.01;
+
+            // Separation
+            separation.x /= total;
+            separation.y /= total;
+        }
+
+        // Mouse interaction
+        if (mouse) {
+            const dx = this.x - mouse.x;
+            const dy = this.y - mouse.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < 100) {
+                separation.x += dx / dist * 2;
+                separation.y += dy / dist * 2;
+            }
+        }
+
+        // Final velocity update
+        this.vx += (align.x + cohesion.x + separation.x) * 0.05;
+        this.vy += (align.y + cohesion.y + separation.y) * 0.05;
+
+        // Normalize velocity
+        const mag = Math.hypot(this.vx, this.vy);
+        this.vx = (this.vx / mag) * this.speed;
+        this.vy = (this.vy / mag) * this.speed;
+
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Bounce off edges
         if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
             this.angle = Math.random() * Math.PI * 2;
+            this.vx = Math.cos(this.angle) * this.speed;
+            this.vy = Math.sin(this.angle) * this.speed;
         }
+        this.hue = (this.hue + 1) % 360;
+        this.color = `hsl(${this.hue}, 100%, 60%)`;
     }
 
     draw(ctx) {
+        ctx.save();
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 10;
         ctx.fillStyle = this.color;
         ctx.beginPath();
-        ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fill();
+        ctx.restore();
     }
 }
 
 const agents = [];
+let mouse = null;
 
-function generateAgents(num = 100) {
+function generateAgents(num = 100, spread = 1) {
     for (let i = 0; i < num; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 1 + 0.5; // slower looks smoother
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const color = `hsl(${Math.random() * 360}, 100%, 60%)`;
-
-        agents.push(new Agent(x, y, angle, speed, color));
+        const x = canvas.width / 2 + (Math.random() - 0.5) * spread;
+        const y = canvas.height / 2 + (Math.random() - 0.5) * spread;
+        agents.push(new Agent(x, y));
     }
 }
 
-generateAgents();
+generateAgents(100);
 
 function updateCanvas() {
-    ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+    ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    for (const a of agents) {
-        a.update();
-        a.draw(ctx);
+    for (let agent of agents) {
+        agent.update(agents, mouse);
+        agent.draw(ctx);
     }
 
     requestAnimationFrame(updateCanvas);
 }
 
 updateCanvas();
+
+canvas.addEventListener("mousemove", (e) => {
+    mouse = { x: e.clientX, y: e.clientY };
+});
+
+canvas.addEventListener("mouseleave", () => {
+    mouse = null;
+});
+
+canvas.addEventListener("click", (e) => {
+    for (let i = 0; i < 20; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const dist = Math.random() * 20;
+        const x = e.clientX + Math.cos(angle) * dist;
+        const y = e.clientY + Math.sin(angle) * dist;
+        agents.push(new Agent(x, y));
+    }
+});
 
 window.addEventListener("resize", () => {
     canvas.width = window.innerWidth;
