@@ -1,0 +1,44 @@
+body {
+    text-align: center;
+    background: #548fc2;
+    padding-top: 40px;
+}
+  
+h1 {
+    margin-bottom: 20px;
+    color: rgb(0,255,120);
+}
+  
+.outer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.wheel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+#spin {
+    margin-top:120px;
+    background-color: rgb(20, 120, 120);
+    color: white;
+    border: 2px solid rgb(251, 251, 255); 
+    border-radius: 20px;
+    cursor: pointer;
+    text-align: center;
+
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+
+    width: 300px; 
+    height: 50px; 
+    padding: 0; 
+    box-sizing: border-box; 
+    
+    white-space: nowrap; 
+}
