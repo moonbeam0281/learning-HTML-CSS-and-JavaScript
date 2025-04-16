@@ -1,13 +1,31 @@
 body{
     background-color: aliceblue;
+    padding-top: 100px;
+}
+
+.theHead{
+    width: 100%;
+    background-color: aquamarine;
+    position: fixed;
+    height: 100px;
+    text-align: center;
+    top: 0px;
+    z-index: 10;
 }
 
 .kartica{
     border: 3px solid black;
-    width: 500px;
+    width: 700px;
     height: 700px;
     text-align: center;
     background-color: yellow;
+    overflow:auto;
+}
+
+.centBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 p{

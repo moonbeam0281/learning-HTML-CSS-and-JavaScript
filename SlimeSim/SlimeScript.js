@@ -10,9 +10,11 @@ class Agent {
         this.y = y;
         this.angle = Math.random() * Math.PI * 2;
         this.speed = Math.random() * 1 + 1.5;
-        this.radius = 3;
-        this.hue = Math.random() * 50;
+        this.radius = 5;
+        this.hue = Math.random() * 360;
         this.color = `hsl(${this.hue}, 100%, 60%)`;
+
+        this.isDead = false;
 
         this.vx = Math.cos(this.angle) * this.speed;
         this.vy = Math.sin(this.angle) * this.speed;
@@ -20,7 +22,9 @@ class Agent {
 
     update(agents, mouse) {
         // Flocking behaviors
-        let align = { x: 0, y: 0 }, cohesion = { x: 0, y: 0 }, separation = { x: 0, y: 0 };
+        let align = { x: 0, y: 0 };
+        let cohesion = { x: 0, y: 0 };
+        let separation = { x: 0, y: 0 };
         let total = 0;
         const perception = 50;
 
@@ -47,7 +51,6 @@ class Agent {
         }
 
         if (total > 0) {
-            // Alignment
             align.x /= total;
             align.y /= total;
             const alignMag = Math.hypot(align.x, align.y);
@@ -56,16 +59,13 @@ class Agent {
                 align.y = (align.y / alignMag) * this.speed;
             }
 
-            // Cohesion
             cohesion.x = ((cohesion.x / total) - this.x) * 0.01;
             cohesion.y = ((cohesion.y / total) - this.y) * 0.01;
 
-            // Separation
             separation.x /= total;
             separation.y /= total;
         }
 
-        // Mouse interaction
         if (mouse) {
             const dx = this.x - mouse.x;
             const dy = this.y - mouse.y;
@@ -101,7 +101,7 @@ class Agent {
     draw(ctx) {
         ctx.save();
         ctx.shadowColor = this.color;
-        ctx.shadowBlur = 10;
+        ctx.shadowBlur = 30;
         ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
@@ -121,7 +121,7 @@ function generateAgents(num = 100, spread = 1) {
     }
 }
 
-generateAgents(100);
+generateAgents(100, 50);
 
 function updateCanvas() {
     ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
