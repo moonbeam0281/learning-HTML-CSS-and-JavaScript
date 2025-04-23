@@ -1,25 +1,37 @@
 body{
-    background-color: aliceblue;
+    background-image: url("divbg.jpg");
     padding-top: 100px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
 }
 
 .theHead{
     width: 100%;
-    background-color: aquamarine;
+    background-color: rgb(125, 76, 189);
+    border-radius: 20px;
     position: fixed;
-    height: 100px;
+    height: fit-content;
     text-align: center;
     top: 0px;
+    margin-right: 5px;
     z-index: 10;
+    align-items: flex-start;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .kartica{
     border: 3px solid black;
+    border-radius: 20px;
     width: 700px;
-    height: 700px;
+    height: fit-content;
+    padding-bottom: 30px;
     text-align: center;
-    background-color: yellow;
-    overflow:auto;
+    background-color: rgba(20, 247, 255, 0.493);
+    box-shadow: 10px 10px 12px black;
 }
 
 .centBox{
@@ -28,6 +40,75 @@ body{
     align-items: center;
 }
 
+.headStyle{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 40px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color:rgb(203, 193, 230);
+}
+
+#slimeSim{
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px black;
+    border: 5px solid rgb(25, 0, 255, 0.66);
+}
+
+.boxText{
+    background-color: rgba(50, 45, 104, 0.315);
+    color: white;
+    border-radius: 20px;
+}
+
 p{
     font-size: 25px;
+}
+
+
+.navCont {
+    position: fixed;
+    top: 15px;
+    left: 20px;
+    display: inline-block;
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+.navBtn {
+    background-color: #a177c1;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+.dMenu {
+    display: none;
+    position: absolute;
+    background-color: #d3b5f5;
+    border-radius: 10px;
+    min-width: 150px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
+    top: 40px;
+    left: 0;
+    z-index: 15;
+    flex-direction: column;
+}
+
+.dMenu a {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: black;
+    display: block;
+    border-bottom: 1px solid #ccc;
+}
+
+.dMenu a:hover {
+    background-color: #bba7d3;
+}
+
+.navCont:hover .dMenu {
+    display: block;
 }

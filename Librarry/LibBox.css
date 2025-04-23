@@ -1,0 +1,39 @@
+.bookDisplay {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 30px 0;
+  align-content:space-evenly;
+}
+
+.bookCard {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  text-align: center;
+  color: #fff;
+  transition: transform 0.2s ease-in-out;
+}
+
+.bookCard:hover {
+  transform: translateY(-5px);
+}
+
+.bookCard img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.bookCard h3 {
+  margin: 10px 0 5px;
+  font-size: 1.2em;
+}
+
+.bookCard .desc {
+  font-size: 0.9em;
+  opacity: 0.8;
+}

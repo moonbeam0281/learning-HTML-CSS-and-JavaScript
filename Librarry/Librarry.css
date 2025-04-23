@@ -1,0 +1,26 @@
+body{
+    background-color: rgba(131, 97, 33, 0.66);
+    overflow-x: auto;
+    margin-top: 100px;
+}
+
+.theHeader{
+    width: 100vw;
+    background-image: url("LibBg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: fixed;
+    top: 0px;
+    margin: 0;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 239, 94, 0.45);
+    height: fit-content;
+    text-align: center;
+    top:0px;
+    z-index: 10;
+    align-items: flex-start;
+    display: flex;
+    justify-content: space-evenly;
+}
