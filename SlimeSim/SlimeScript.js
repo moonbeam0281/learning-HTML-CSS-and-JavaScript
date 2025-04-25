@@ -9,7 +9,7 @@ class Agent {
         this.x = x;
         this.y = y;
         this.angle = Math.random() * Math.PI * 2;
-        this.speed = Math.random() * 1 + 1.5;
+        this.speed = Math.random() * 1 + 1;
         this.radius = 5;
         this.hue = Math.random() * 360;
         this.color = `hsl(${this.hue}, 100%, 60%)`;

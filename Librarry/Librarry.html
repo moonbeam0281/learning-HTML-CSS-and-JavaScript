@@ -3,29 +3,34 @@
 <head>
     <title>The Library</title>
     <link rel="stylesheet" href = "Librarry.css">
-    <link rel="stylesheet" href = "LibMenu.css">
-    <link rel="stylesheet" href = "LibMain.css">
-    <link rel="stylesheet" href = "LibBox2.css">
-    <link rel="stylesheet" href = "LibMore.css">
 </head>
 
 <body>
     <header class = "theHeader">
-        <h1>Moon's books</h1>
-    </header>
-    <div class="navCont">
-        <div class="navBtn">☰ Menu</div>
-        <div class="dMenu">
-            <a href="../SlimeSim/SlimeBody.html">About us</a>
-            <a href="../SlimeSim/SlimeBody.html">Contact us</a>
-            <a href="../SlimeSim/SlimeBody.html">Email us</a>
-            <a href="../SlimeSim/SlimeBody.html">Order</a>
-            <a href="../SlimeSim/SlimeBody.html">Legal terms</a>
+        <h1 id = "titleHead">The great library of the Moon</h1>
+
+        <div class="navCont">
+            <div class="navBtn">☰ Menu</div>
+            <div class="dMenu">
+                <a href="../SlimeSim/SlimeBody.html">About us</a>
+                <a href="../SlimeSim/SlimeBody.html">Contact us</a>
+                <a href="../SlimeSim/SlimeBody.html">Email us</a>
+                <a href="../SlimeSim/SlimeBody.html">Order</a>
+                <a href="../SlimeSim/SlimeBody.html">Legal terms</a>
+            </div>
         </div>
-    </div>
+    </header>
+
+    <div class="searchBar">
+        <input type="text" id="searchInput" placeholder="Search for books...">
+        <input type="number" id="searchNumb" min = "0" max = "60" placeholder="Number of results">
+        <button id = "searchBtn" onclick="fetchBooks(document.getElementById('searchInput').value)">Search</button>
+      </div>
 
     <div class="bookDisplay" id = "bookDisplay">
-        <script src="LibBookBox.js"></script>
+
+        
+
     </div>
     <div id="modal" class="modal">
         <div class="modalContent">
@@ -36,6 +41,10 @@
           <p></p>
         </div>
       </div>
+
+      <div id="floatingBooks"></div>
+
+      <script src="LibBooksOnline.js"></script>
 
 </body>
 
