@@ -3,7 +3,7 @@ body, html {
     padding: 0;
     overflow: hidden;
     height: 100%;
-    background: rgb(50,50,50);
+    background: rgb(0,0,0);
 }
   
 canvas {
