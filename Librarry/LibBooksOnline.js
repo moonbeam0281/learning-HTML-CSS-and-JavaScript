@@ -42,7 +42,7 @@ function fetchBooks(query) {
             
             const nRez = document.getElementById("searchNumb").value;
 
-            data.docs.slice(0, (nRez == "" || nRez == 0? 20 : (nRez > 60? 60 : nRez))).forEach(book => {
+            data.docs.slice(0, (nRez == "" || nRez == 0? 20 : (nRez > 100? 100 : nRez))).forEach(book => {
             const title = book.title;
             console.log("Added book: '" + title + "'");
             const author = book.author_name ? book.author_name[0] : "Unknown";
