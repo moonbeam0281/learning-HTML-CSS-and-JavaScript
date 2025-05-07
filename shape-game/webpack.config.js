@@ -13,7 +13,7 @@ module.exports = {
     static: {
       directory: path.join(__dirname, 'public')
     }, // use HtmlWebpackPlugin output instead
-    hot: true,
+    hot: false,
     open: true,
   },
   plugins: [

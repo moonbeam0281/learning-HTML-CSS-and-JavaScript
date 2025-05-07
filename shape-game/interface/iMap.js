@@ -1,24 +1,18 @@
 //iMap interface will handle our maps and display our terrain
 
-export class iMap{
-    constructor(w, l) {
-        if(this.constructor === iMap ){
-            throw new Error("Cannot instantiate interface directly");
-        }
-        this.widht = w;
-        this.lenght = l;
+export class iMap {
+    constructor() {
+      if (new.target === iMap) {
+        throw new Error("iMap is an abstract class and must be extended.");
+      }
     }
-
-    generate(scene){
-        throw new Error("Method 'generate()' must be implemented")
+  
+    generate(scene) {
+      throw new Error("generate() must be implemented by the map.");
     }
-
-    getFloor(){
-        throw new Error("Method 'getFloor()' must be implemented")
-    }
-
+  
     destroy() {
-        throw new Error("Method 'destroy()' must be implemented.");
+      throw new Error("destroy() must be implemented by the map.");
     }
-
-}
+  }
+  

@@ -20,5 +20,6 @@ export function setupLighting(scene) {
 
   scene.add(directionalLight);
 
-  console.log('Lighting generated');
+  console.log('Lighting generated to scene');
+  console.log(scene);
 }

@@ -1,23 +1,47 @@
-export class MapHandler{
-    constructor()
-    {
-        this.maps = [];
-        this.currentMap = null;
-        this.players = [];
-    }
-}
+import { iMap } from '../../interface/iMap.js';
 
-function getAllTypesOf(baseType) {
-    // Similar implementation but using the passed base type
-    if (typeof window !== 'undefined') {
-        return Array.from(Object.keys(window))
-            .filter(key => 
-                window[key] && 
-                typeof window[key] === 'function' && 
-                window[key].prototype instanceof baseType
-            );
+export class MapHandler {
+  constructor(scene, selector) {
+    this.scene = scene;
+    this.activeMap = null;
+    this.selector = selector;
+    this.maps = [];
+  }
+
+  loadMaps() {
+    const context = require.context('../Maps', false, /\.js$/); 
+
+    context.keys().forEach((key) => {
+      const m = context(key);
+      for (const exported in m) {
+        const typeClass = m[exported];
+        if (typeof typeClass === 'function' && typeClass.prototype instanceof iMap) {
+          const mapInstance = new typeClass();
+          this.maps.push(mapInstance);
+        }
+      }
+    });
+
+    this.activeMap = this.maps[0];
+
+    this.maps.forEach(map => {
+      const o = document.createElement('option');
+      o.value = map.mapName;
+      o.textContent = map.mapName;
+      this.selector.appendChild(o);
+    });
+    this.scene.add(this.activeMap);
+  }
+
+  getMapMesh() {
+    this.activeMap.generate(); 
+    return this.activeMap.mesh;
+  }
+
+  cleanup() {
+    if (this.activeMap) {
+        this.scene = 
+      this.activeMap.destroy();
     }
-    
-    // Similar logic for other environments
-    return [];
+  }
 }
