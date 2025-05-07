@@ -1,8 +1,10 @@
 // Camera.js
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { RTSCameraController } from './RTSCameraController';
 
-export function setupCamera(renderer, mapSize) {
+
+
+export function setupCamera(renderer, map) {
   const camera = new THREE.PerspectiveCamera(
     75,
     window.innerWidth / window.innerHeight,
@@ -10,18 +12,14 @@ export function setupCamera(renderer, mapSize) {
     1000
   );
 
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.05;
+  // Position camera at an RTS-like angle
+  camera.position.set(0, 30, 10);
+  camera.lookAt(0, 0, 0);
 
-  controls.minDistance = 10;
-  controls.maxDistance = Math.max(mapSize.width, mapSize.lenght) * 1.2;
+  // Setup custom RTS controller
+  const controls = new RTSCameraController(camera, renderer.domElement, {width: map.width, length: map.lenght});
 
-  controls.maxPolarAngle = Math.PI / 2.1;
-  controls.target.set(0, 0, 0);
-  controls.update();
-
-  console.log('Generated a camera object.');
+  console.log('Generated RTS-style camera.');
 
   return { camera, controls };
 }
