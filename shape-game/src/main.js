@@ -17,7 +17,7 @@ maphandler.loadMaps();
 //Renderer
 const canvas = document.getElementById('canvas');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-mainscene.add(maphandler.getMapMesh());
+
 
 //Camera and handeler
 const { camera, controls } = setupCamera(renderer, maphandler.activeMap);

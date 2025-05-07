@@ -42,5 +42,6 @@ export class GrassFields extends iMap {
             obj.material?.dispose();
         });
         this.objects = [];
+        this.mesh = null;
     }
 }
