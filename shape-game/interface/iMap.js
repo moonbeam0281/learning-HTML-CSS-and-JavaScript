@@ -5,8 +5,8 @@ export class iMap{
         if(this.constructor === iMap ){
             throw new Error("Cannot instantiate interface directly");
         }
-        this.widht;
-        this.lenght;
+        this.widht = w;
+        this.lenght = l;
     }
 
     generate(scene){

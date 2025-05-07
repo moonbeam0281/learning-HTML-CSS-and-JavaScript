@@ -10,7 +10,9 @@ module.exports = {
     clean: true,
   },
   devServer: {
-    static: false, // use HtmlWebpackPlugin output instead
+    static: {
+      directory: path.join(__dirname, 'public')
+    }, // use HtmlWebpackPlugin output instead
     hot: true,
     open: true,
   },
@@ -24,6 +26,10 @@ module.exports = {
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        type: 'asset/resource',
       }
     ]
   }

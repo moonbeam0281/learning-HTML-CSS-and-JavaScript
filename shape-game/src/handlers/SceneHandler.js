@@ -24,7 +24,7 @@ export class SceneHandler {
     console.log('Created renderer and finished generating scene handler.');
     console.log(this.renderer);
     //Camera 
-    const {camera, controls} = setupCamera(this.renderer, this.map);
+    const {camera, controls} = setupCamera(this.renderer, this.map, );
     this.camera = camera;
     this.controls = controls;
     console.log('Generating camera');

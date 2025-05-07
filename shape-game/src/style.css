@@ -1,1 +1,30 @@
- 
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+canvas {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+}
+
+#hud {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    color: white;
+    font-family: sans-serif;
+    z-index: 10;
+}
+
+.resource-bar {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 8px 12px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+}

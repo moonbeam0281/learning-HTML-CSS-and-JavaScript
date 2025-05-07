@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 export class RTSCameraController {
-    constructor(camera, domElement, mapBounds = { width: 100, length: 100 }) {
+    constructor(camera, domElement, mapBounds = { width, length }) {
         this.camera = camera;
         this.domElement = domElement;
         this.isDragging = false;
@@ -9,15 +9,25 @@ export class RTSCameraController {
         this.dragSpeed = 0.1;
         this.scrollSpeed = 0.5;
         this.fixedHeight = camera.position.y;
+        this.isMouseInWindow = true;
 
-        this.edgeThreshold = 50; // px from screen edge
+        this.edgeBuffer = {
+            left: 60,
+            right: 60,
+            top: 40,
+            bottom: 40,
+        };
         this.movementKeys = {};
         this.mapBounds = mapBounds;
 
-        this.mouse = { x: 0, y: 0 };
+        this.mouse = {
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2,
+        };
 
         this.initListeners();
     }
+
 
     initListeners() {
         this.domElement.addEventListener('contextmenu', e => e.preventDefault()); // prevent right-click menu
@@ -33,17 +43,11 @@ export class RTSCameraController {
         window.addEventListener('keydown', (e) => {
             this.movementKeys[e.key.toLowerCase()] = true;
         });
+
         window.addEventListener('keyup', (e) => {
             this.movementKeys[e.key.toLowerCase()] = false;
         });
 
-        // Track mouse position
-        this.domElement.addEventListener('mousemove', (e) => {
-            this.mouse.x = e.clientX;
-            this.mouse.y = e.clientY;
-
-            // (existing drag code stays here...)
-        });
         this.domElement.addEventListener('mouseup', (e) => {
             if (e.button === 2) {
                 this.isDragging = false;
@@ -51,6 +55,8 @@ export class RTSCameraController {
         });
 
         this.domElement.addEventListener('mousemove', (e) => {
+            this.mouse.x = e.clientX;
+            this.mouse.y = e.clientY;
             if (!this.isDragging) return;
 
             const dx = e.clientX - this.lastMouse.x;
@@ -73,7 +79,28 @@ export class RTSCameraController {
             // Do NOT update lookAt — preserve current orientation
             this.lastMouse.x = e.clientX;
             this.lastMouse.y = e.clientY;
+            console.log("Mouse x = {0} Mouse y = {1}", this.lastMouse.x, this.lastMouse.y);
         });
+    }
+
+    updateCursor() {
+        const { x, y } = this.mouse;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const b = this.edgeBuffer;
+
+        let cursor = 'default';
+
+        if (x < b.left && y < b.top) cursor = 'nw-resize';
+        else if (x > width - b.right && y < b.top) cursor = 'ne-resize';
+        else if (x < b.left && y > height - b.bottom) cursor = 'sw-resize';
+        else if (x > width - b.right && y > height - b.bottom) cursor = 'se-resize';
+        else if (x < b.left) cursor = 'w-resize';
+        else if (x > width - b.right) cursor = 'e-resize';
+        else if (y < b.top) cursor = 'n-resize';
+        else if (y > height - b.bottom) cursor = 's-resize';
+
+        this.domElement.style.cursor = cursor;
     }
 
     update() {
@@ -104,10 +131,14 @@ export class RTSCameraController {
         const width = window.innerWidth;
         const height = window.innerHeight;
 
-        if (x < this.edgeThreshold) move.sub(right);
-        if (x > width - this.edgeThreshold) move.add(right);
-        if (y < this.edgeThreshold) move.add(forward);
-        if (y > height - this.edgeThreshold) move.sub(forward);
+        if(!this.isDragging)
+        {
+            this.updateCursor();
+            if (x < this.edgeBuffer.left) move.sub(right);
+            if (x > width - this.edgeBuffer.right) move.add(right);
+            if (y < this.edgeBuffer.top) move.add(forward);
+            if (y > height - this.edgeBuffer.bottom) move.sub(forward);
+        }
 
         // Apply movement
         move.normalize().multiplyScalar(this.scrollSpeed);
