@@ -30,18 +30,19 @@ export class MapHandler {
       o.textContent = map.mapName;
       this.selector.appendChild(o);
     });
-    this.scene.add(this.activeMap);
+    this.generateMap();
   }
 
-  getMapMesh() {
-    this.activeMap.generate(); 
-    return this.activeMap.mesh;
+  generateMap()
+  {
+    this.activeMap.generate();
+    this.activeMap.objects.forEach(obj => this.scene.add(obj));
   }
 
   cleanup() {
-    if (this.activeMap) {
-        this.scene = 
-      this.activeMap.destroy();
+    if(this.activeMap && this.scene)
+    {
+      this.activeMap.destroy(this.scene);
     }
   }
 }

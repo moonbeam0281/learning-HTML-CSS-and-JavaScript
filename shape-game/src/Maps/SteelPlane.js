@@ -9,7 +9,6 @@ export class SteelPlanes extends iMap {
         this.width = 240;
         this.lenght = 120;
 
-        this.mesh = null;
         this.objects = [];
     }
 
@@ -31,16 +30,19 @@ export class SteelPlanes extends iMap {
         floor.position.x = 0;
         floor.position.z = 0;
         floor.receiveShadow = true;
-        this.mesh = floor;
+
         this.objects.push(floor);
     }
 
-    destroy() {
+    destroy(scene) {
+        console.log("called destroy from steelfield");
         this.objects.forEach(obj => {
-            obj.geometry?.dispose();
-            obj.material?.dispose();
+            if (obj.isMesh) {
+                obj.geometry?.dispose();
+                obj.material?.dispose();
+            }
+            scene.remove(obj);
         });
         this.objects = [];
-        this.mesh = null;
     }
 }

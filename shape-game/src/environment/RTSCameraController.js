@@ -79,7 +79,7 @@ export class RTSCameraController {
             // Do NOT update lookAt — preserve current orientation
             this.lastMouse.x = e.clientX;
             this.lastMouse.y = e.clientY;
-            console.log("Mouse x = {0} Mouse y = {1}", this.lastMouse.x, this.lastMouse.y);
+            //console.log("Mouse x = {0} Mouse y = {1}", this.lastMouse.x, this.lastMouse.y);
         });
     }
 

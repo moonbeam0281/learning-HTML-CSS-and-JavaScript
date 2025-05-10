@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { iMap } from '../../interface/iMap.js';
 import grassImage from '../assets/grass.jpg';
+import { setupLighting } from '../environment/Lighting.js';
 
 export class GrassFields extends iMap {
     constructor() {
@@ -8,8 +9,6 @@ export class GrassFields extends iMap {
         this.mapName = "Grass Fields";
         this.width = 120;
         this.lenght = 240;
-        
-        this.mesh = null;
         this.objects = [];
     }
 
@@ -32,16 +31,20 @@ export class GrassFields extends iMap {
         floor.position.z = 0;
         floor.receiveShadow = true;
 
-        this.mesh = floor;
         this.objects.push(floor);
+        console.log("Generated Grass fields: displaying objects");
+        console.log(this.objects);
     }
 
-    destroy() {
+    destroy(scene) {
+        console.log("called destroy from grassfield");
         this.objects.forEach(obj => {
-            obj.geometry?.dispose();
-            obj.material?.dispose();
+            if (obj.isMesh) {
+                obj.geometry?.dispose();
+                obj.material?.dispose();
+            }
+            scene.remove(obj);
         });
         this.objects = [];
-        this.mesh = null;
     }
 }

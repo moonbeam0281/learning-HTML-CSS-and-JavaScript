@@ -1,31 +1,32 @@
 import * as THREE from 'three';
 import { SceneHandler } from './handlers/SceneHandler.js';
 import { MapHandler } from './handlers/MapHandler.js';
-import { setupCamera } from './environment/Camera.js';
+import './style.css';
 
-// Scene setup
-//const sceneHandler = new SceneHandler();
-//sceneHandler.initialize();
-const mainscene = new THREE.Scene();
-
-
-//Map Handler and selector
-const mapSelect = document.getElementById('mapSelect');
-const maphandler = new MapHandler(mainscene, mapSelect);
-maphandler.loadMaps();
-
-//Renderer
+//Scene handler
+const playerName = document.getElementById('playerNameInput');
+console.log(playerName.innerHTML);
 const canvas = document.getElementById('canvas');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+const mapSelect = document.getElementById('mapSelect');
+const mainScene = new THREE.Scene();
+const maphandler = new MapHandler(mainScene, mapSelect);
+maphandler.loadMaps();
+const sceneHandler = new SceneHandler(playerName.innerHTML, mainScene, renderer, maphandler.activeMap);
+//Map Handler and selector
+
+
+
+//Renderer
+
 
 
 //Camera and handeler
-const { camera, controls } = setupCamera(renderer, maphandler.activeMap);
-//const scene = sceneHandler.scene;
-//const camera = sceneHandler.camera;
-
+//const { camera, controls } = setupCamera(renderer, maphandler.activeMap);
+/*
 console.log("Logging every object...");
 console.log("mainScene: ");
+console.log(mainscene);
 console.log("Canvas: ")
 console.log(canvas)
 console.log("Renderer: ")
@@ -35,24 +36,29 @@ console.log("mapHadpler: ");
 console.log(maphandler);
 console.log("Camera and controls");
 console.log(camera);
-console.log(controls);
+console.log(controls);*/
 
-//Scene Handler 
-const sceneHandler = new SceneHandler(mainscene, maphandler.activeMap);
-console.log('Generating scene handler');
+
+//console.log('Generating scene handler');
 
 mapSelect.addEventListener('change', (event) => {
   const selectedMapName = event.target.value;
   console.log('User selected map:', selectedMapName);
 
-  // Example: find the matching map object and load it
+  //
   const selectedMap = maphandler.maps.find(m => m.mapName === selectedMapName);
   if (selectedMap != null) {
+    
     maphandler.cleanup();
+    console.log("cleaning...");
     maphandler.activeMap = selectedMap;
-    selectedMap.generate();
-    mainscene.add(selectedMap.mesh); // or whatever object(s) it generates
-  }
+    console.log("Setting up to new selected map...");
+    maphandler.generateMap();
+    console.log("Generating map...");
+    console.log(maphandler.activeMap);
+    console.log(mainscene);
+    sceneHandler.updateMap();
+  };
 });
 
 // Animation loop
@@ -61,8 +67,8 @@ function animate() {
   requestAnimationFrame(animate);
   //const elapsed = (performance.now() - startTime) / 1000;
 
-  renderer.render(mainscene, camera);
-  controls.update();
+  renderer.render(sceneHandler.scene, sceneHandler.mainCamera);
+  sceneHandler.camera.controls.update();
   //console.log(`Scene running for: ${elapsed.toFixed(2)}s`);
 }
 animate();
@@ -72,10 +78,10 @@ window.addEventListener('resize', () => {
   const width = canvas.clientWidth;
   const height = canvas.clientHeight;
   renderer.setSize(width, height, false);
-  camera.aspect = width / height;
-  camera.updateProjectionMatrix();
+  mainCamera.camera.aspect = width / height;
+  mainCamera.camera.updateProjectionMatrix();
 });
 
 window.addEventListener('load', () => {
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(canvas.innerWidth, canvas.innerHeight);
 });

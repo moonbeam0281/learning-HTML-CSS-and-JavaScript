@@ -1,28 +1,59 @@
-html,
-body {
+/* Reset */
+* {
     margin: 0;
     padding: 0;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    font-family: sans-serif;
-    background: #111;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    box-sizing: border-box;
 }
 
-#sceneContainer {
-    background-color: gray;
-    position: relative;
-    width: 80vw;
-    aspect-ratio: 16 / 9;
-    background: black;
+html,
+body {
+    height: 100%;
+    width: 100%;
+    font-family: sans-serif;
+    background-color: #111;
+}
+
+/* Layout wrapper */
+#layout {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Header */
+header {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-bottom: 2px solid #444;
+}
+
+/* Main area */
+.main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background: #1a1a1a;
+    color: white;
+    padding: 1rem;
+    border-right: 2px solid #444;
+}
+
+/* Scene / canvas area */
+.scene-area {
+    flex: 1;
+    position: relative;
+    background: black;
+    width: 100vw;
+    height: 100vh;
 }
 
 canvas {
@@ -31,20 +62,11 @@ canvas {
     display: block;
 }
 
-#hud {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 10;
+.select-menu{
+    border: solid black 2px;
+    border-radius: 5px;
+    padding: 2px;
+    display: flex;
+    background-color:#444;
     color: white;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 10px 15px;
-    border-radius: 8px;
-    font-size: 14px;
-}
-
-select {
-    margin-left: 10px;
-    padding: 3px 6px;
-    font-size: 14px;
 }
