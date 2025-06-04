@@ -1,0 +1,21 @@
+body{
+    background-color: black;
+    height: 100vh;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#canvas{
+    background-color: yellow;
+    width: 250px;
+    height: 250px;
+}
+
+button{
+    width: 100px;
+    height: 50px;
+}
